@@ -11,7 +11,14 @@ async function register(data: RegisterBody): Promise<User> {
     const hashedPassword = await bcrypt.hash(data.password, 12);
     const newUser = await prisma.create({ data: { ...data, password: hashedPassword } });
 
-    return { ...newUser };
+    return {
+        id: newUser.id,
+        email: newUser.email,
+        first_name: newUser.first_name,
+        last_name: newUser.last_name,
+        phone_number: newUser.phone_number,
+        role_id: newUser.role_id
+    };
 }
 
 const authService = {
