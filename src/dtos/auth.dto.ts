@@ -6,3 +6,8 @@ export interface RegisterBody {
     phone_number: string,
     role_id: number
 }
+
+export interface LoginBody {
+    email: string,
+    password: string
+}

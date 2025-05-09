@@ -9,3 +9,7 @@ export const registerSchema = z.object({
     role_id: z.number().int().min(1).max(2),
 });
 
+export const loginSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(1),
+});
