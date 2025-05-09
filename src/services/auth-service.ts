@@ -15,6 +15,15 @@ async function register(data: RegisterBody): Promise<User> {
         throw new Error(`Validation Error: ${validationError}`);
     }
 
+    const foundUser = await prisma.findFirst({
+        where: {
+            email: validatedData.data.email
+        }
+    });
+
+    if (foundUser) {
+        throw new Error('Conflict: User already exists!');
+    }
 
     const hashedPassword = await bcrypt.hash(data.password, 12);
     const newUser = await prisma.create({ data: { ...validatedData.data, password: hashedPassword } });

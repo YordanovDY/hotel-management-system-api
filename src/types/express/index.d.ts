@@ -4,8 +4,9 @@ declare global {
     namespace Express {
         interface Response {
             errors: {
-                internalServerError: () => void;
+                internalServerError: (message?: string) => void;
                 badRequest: (message?: string) => void;
+                conflict: (message?: string) => void;
                 // notFound: (message?: string) => void;
                 // unauthorized: (message?: string) => void;
                 // forbidden: (message?: string) => void;

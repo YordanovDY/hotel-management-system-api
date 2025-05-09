@@ -5,9 +5,13 @@ export function attachErrorResponses(req: Request, res: Response, next: NextFunc
         internalServerError: (message = 'Internal Server Error') => {
             res.status(500).json({ status: 500, message });
         },
-        
+
         badRequest: (message = 'Bad Request') => {
             res.status(400).json({ status: 400, message });
+        },
+
+        conflict: (message = 'Conflict') => {
+            res.status(409).json({ status: 409, message });
         },
 
         // notFound: (message = 'Not Found') => {
