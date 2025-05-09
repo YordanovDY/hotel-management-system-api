@@ -2,14 +2,22 @@ import bcrypt from 'bcrypt';
 import { PrismaClient } from "../generated/prisma";
 import { RegisterBody } from "../dtos/auth.dto";
 import { User } from "../types/auth-types";
+import { registerSchema } from '../validators/user.schema';
+import { extractErrorMessage } from '../utils/error-util';
 
 const prisma = new PrismaClient().user;
 
 async function register(data: RegisterBody): Promise<User> {
-    // TODO: Validation!!!
+    const validatedData = registerSchema.safeParse(data);
+
+    if (!validatedData.success) {
+        const validationError = extractErrorMessage<RegisterBody>(validatedData.error.format());
+        throw new Error(`Validation Error: ${validationError}`);
+    }
+
 
     const hashedPassword = await bcrypt.hash(data.password, 12);
-    const newUser = await prisma.create({ data: { ...data, password: hashedPassword } });
+    const newUser = await prisma.create({ data: { ...validatedData.data, password: hashedPassword } });
 
     return {
         id: newUser.id,

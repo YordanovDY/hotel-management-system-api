@@ -12,8 +12,23 @@ export async function registerController(req: Request<{}, {}, RegisterBody>, res
         res.status(201).json(result);
 
     } catch (err) {
-        console.log(err);
+        if (err instanceof Error) {
+            const message = err.message;
+            if (message.startsWith('Validation Error')) {
+                res.errors.badRequest(message);
+                return;
+            }
+        }
 
+        if (err instanceof Error) {
+            const message = err.message;
+            if (message.startsWith('Conflict')) {
+                res.errors.conflict(message);
+                return;
+            }
+        }
+
+        console.log(err);
         res.errors.internalServerError();
     }
 }
