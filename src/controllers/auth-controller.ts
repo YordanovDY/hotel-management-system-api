@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { LoginBody, RegisterBody } from "../dtos/auth.dto";
 import authService from "../services/auth-service";
+import asyncJWT from "../utils/jwt_util";
+import { AUTH_COOKIE_NAME } from "../config/constants";
+import { getDaysInMilliseconds } from "../utils/date-util";
 
 // TODO: Create login, logout
 
@@ -37,8 +40,15 @@ export async function loginController(req: Request<{}, {}, LoginBody>, res: Resp
     const data = req.body;
 
     try {
-        const result = await authService.login(data);
-        res.json(result);
+        const user = await authService.login(data);
+        const token = await asyncJWT.signAuthToken(user);
+
+        res
+            .cookie(AUTH_COOKIE_NAME, token, {
+                httpOnly: true,
+                maxAge: getDaysInMilliseconds(7)
+            })
+            .json(user);
 
     } catch (err) {
         if (err instanceof Error) {

@@ -1,7 +1,15 @@
 import * as express from 'express-serve-static-core';
+import { User } from '../auth-types';
 
 declare global {
     namespace Express {
+        interface Request {
+            user?: User;
+            cookies: {
+                [key: string]: string;
+            };
+        }
+
         interface Response {
             errors: {
                 internalServerError: (message?: string) => void;
@@ -14,3 +22,5 @@ declare global {
         }
     }
 }
+
+export {};
