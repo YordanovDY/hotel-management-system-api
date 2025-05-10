@@ -11,7 +11,9 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
     }
 
     try {
-        const user = await asyncJWT.verifyAuthToken(token);
+        const userData = await asyncJWT.verifyAuthToken(token);
+        const { iat, exp, ...user } = userData;
+        
         req.user = user;
         next();
 

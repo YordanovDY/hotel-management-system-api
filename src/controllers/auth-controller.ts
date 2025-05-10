@@ -72,7 +72,18 @@ export async function loginController(req: Request<{}, {}, LoginBody>, res: Resp
     }
 }
 
-export async function logoutController(req: Request, res: Response) {
+export function logoutController(req: Request, res: Response) {
     res.clearCookie(AUTH_COOKIE_NAME);
     res.status(204).end();
+}
+
+export function userController(req: Request, res: Response) {
+    const user = req.user;
+
+    if (user) {
+        res.json(user);
+        return;
+    }
+
+    res.json(null);
 }
