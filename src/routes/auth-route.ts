@@ -4,7 +4,7 @@ import { requireToken } from "../middlewares/auth-middleware";
 const authRouter = Router();
 
 authRouter.post('/login', loginController);
-authRouter.post('/register', registerController);
+authRouter.post('/register', requireToken, registerController);
 authRouter.get('/logout', requireToken, logoutController);
 authRouter.get('/user', userController);
 

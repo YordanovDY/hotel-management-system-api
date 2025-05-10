@@ -141,6 +141,13 @@ exports.Prisma.InvalidTokenScalarFieldEnum = {
   user_id: 'user_id'
 };
 
+exports.Prisma.EventsScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  created_at: 'created_at',
+  user_id: 'user_id'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -155,7 +162,8 @@ exports.Prisma.QueryMode = {
 exports.Prisma.ModelName = {
   Role: 'Role',
   User: 'User',
-  InvalidToken: 'InvalidToken'
+  InvalidToken: 'InvalidToken',
+  Events: 'Events'
 };
 
 /**

@@ -4,14 +4,18 @@ import authService from "../services/auth-service";
 import asyncJWT from "../utils/jwt_util";
 import { AUTH_COOKIE_NAME } from "../config/constants";
 import { getDaysInMilliseconds } from "../utils/date-util";
+import eventService from "../services/event-service";
+import { User } from "../types/auth-types";
 
 // TODO: Create login, logout
 
 export async function registerController(req: Request<{}, {}, RegisterBody>, res: Response) {
     const data = req.body;
+    const user = req.user as User;
 
     try {
         const result = await authService.register(data);
+        await eventService.createUser(user, result);
         res.status(201).json(result);
 
     } catch (err) {
@@ -42,6 +46,7 @@ export async function loginController(req: Request<{}, {}, LoginBody>, res: Resp
     try {
         const user = await authService.login(data);
         const token = await asyncJWT.signAuthToken(user);
+        await eventService.login(user);
 
         res
             .cookie(AUTH_COOKIE_NAME, token, {
@@ -73,11 +78,13 @@ export async function loginController(req: Request<{}, {}, LoginBody>, res: Resp
 }
 
 export async function logoutController(req: Request, res: Response) {
-    const userId = req.user?.id || '';
+    const user = req.user as User;
+    const userId = user.id;
     const token = req.cookies[AUTH_COOKIE_NAME];
 
     try {
         await authService.logout(token, userId);
+        await eventService.logout(user);
         res.clearCookie(AUTH_COOKIE_NAME);
         res.status(204).end();
 
