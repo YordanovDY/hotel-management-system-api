@@ -83,10 +83,23 @@ async function logout(token: string, userId: string): Promise<void> {
     })
 }
 
+async function validateToken(token: string): Promise<void> {
+    const foundInvalidToken = await TokenClient.findFirst({
+        where: {
+            token
+        }
+    });
+
+    if (foundInvalidToken) {
+        throw new Error('Invalid authentication token!');
+    }
+}
+
 const authService = {
     register,
     login,
-    logout
+    logout,
+    validateToken,
 }
 
 export default authService;
