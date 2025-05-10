@@ -135,6 +135,12 @@ exports.Prisma.UserScalarFieldEnum = {
   role_id: 'role_id'
 };
 
+exports.Prisma.InvalidTokenScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  user_id: 'user_id'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -148,7 +154,8 @@ exports.Prisma.QueryMode = {
 
 exports.Prisma.ModelName = {
   Role: 'Role',
-  User: 'User'
+  User: 'User',
+  InvalidToken: 'InvalidToken'
 };
 
 /**

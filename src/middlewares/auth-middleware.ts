@@ -13,7 +13,7 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
     try {
         const userData = await asyncJWT.verifyAuthToken(token);
         const { iat, exp, ...user } = userData;
-        
+
         req.user = user;
         next();
 
@@ -27,4 +27,15 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
 
         res.errors.unauthorized(`Unauthorized: ${message}`);
     }
+}
+
+export function requireToken(req: Request, res: Response, next: NextFunction) {
+    const user = req.user;
+
+    if (!user) {
+        res.errors.unauthorized('Unauthorized: Authentication token required!');
+        return;
+    }
+
+    next();
 }

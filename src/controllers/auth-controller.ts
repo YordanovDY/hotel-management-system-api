@@ -72,9 +72,19 @@ export async function loginController(req: Request<{}, {}, LoginBody>, res: Resp
     }
 }
 
-export function logoutController(req: Request, res: Response) {
-    res.clearCookie(AUTH_COOKIE_NAME);
-    res.status(204).end();
+export async function logoutController(req: Request, res: Response) {
+    const userId = req.user?.id || '';
+    const token = req.cookies[AUTH_COOKIE_NAME];
+
+    try {
+        await authService.logout(token, userId);
+        res.clearCookie(AUTH_COOKIE_NAME);
+        res.status(204).end();
+
+    } catch (err) {
+        console.log(err);
+        res.errors.internalServerError();
+    }
 }
 
 export function userController(req: Request, res: Response) {

@@ -23,6 +23,11 @@ export type Role = $Result.DefaultSelection<Prisma.$RolePayload>
  * 
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
+ * Model InvalidToken
+ * 
+ */
+export type InvalidToken = $Result.DefaultSelection<Prisma.$InvalidTokenPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -168,6 +173,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.invalidToken`: Exposes CRUD operations for the **InvalidToken** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InvalidTokens
+    * const invalidTokens = await prisma.invalidToken.findMany()
+    * ```
+    */
+  get invalidToken(): Prisma.InvalidTokenDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -609,7 +624,8 @@ export namespace Prisma {
 
   export const ModelName: {
     Role: 'Role',
-    User: 'User'
+    User: 'User',
+    InvalidToken: 'InvalidToken'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -628,7 +644,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "role" | "user"
+      modelProps: "role" | "user" | "invalidToken"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -780,6 +796,80 @@ export namespace Prisma {
           }
         }
       }
+      InvalidToken: {
+        payload: Prisma.$InvalidTokenPayload<ExtArgs>
+        fields: Prisma.InvalidTokenFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InvalidTokenFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvalidTokenPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InvalidTokenFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvalidTokenPayload>
+          }
+          findFirst: {
+            args: Prisma.InvalidTokenFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvalidTokenPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InvalidTokenFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvalidTokenPayload>
+          }
+          findMany: {
+            args: Prisma.InvalidTokenFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvalidTokenPayload>[]
+          }
+          create: {
+            args: Prisma.InvalidTokenCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvalidTokenPayload>
+          }
+          createMany: {
+            args: Prisma.InvalidTokenCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InvalidTokenCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvalidTokenPayload>[]
+          }
+          delete: {
+            args: Prisma.InvalidTokenDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvalidTokenPayload>
+          }
+          update: {
+            args: Prisma.InvalidTokenUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvalidTokenPayload>
+          }
+          deleteMany: {
+            args: Prisma.InvalidTokenDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InvalidTokenUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InvalidTokenUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvalidTokenPayload>[]
+          }
+          upsert: {
+            args: Prisma.InvalidTokenUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvalidTokenPayload>
+          }
+          aggregate: {
+            args: Prisma.InvalidTokenAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInvalidToken>
+          }
+          groupBy: {
+            args: Prisma.InvalidTokenGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InvalidTokenGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InvalidTokenCountArgs<ExtArgs>
+            result: $Utils.Optional<InvalidTokenCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -866,6 +956,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     role?: RoleOmit
     user?: UserOmit
+    invalidToken?: InvalidTokenOmit
   }
 
   /* Types for Logging */
@@ -983,6 +1074,37 @@ export namespace Prisma {
    */
   export type RoleCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
+  }
+
+
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    tokens: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tokens?: boolean | UserCountOutputTypeCountTokensArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InvalidTokenWhereInput
   }
 
 
@@ -2270,6 +2392,8 @@ export namespace Prisma {
     phone_number?: boolean
     role_id?: boolean
     role?: boolean | RoleDefaultArgs<ExtArgs>
+    tokens?: boolean | User$tokensArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2307,6 +2431,8 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "first_name" | "last_name" | "phone_number" | "role_id", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     role?: boolean | RoleDefaultArgs<ExtArgs>
+    tokens?: boolean | User$tokensArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     role?: boolean | RoleDefaultArgs<ExtArgs>
@@ -2319,6 +2445,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       role: Prisma.$RolePayload<ExtArgs>
+      tokens: Prisma.$InvalidTokenPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2723,6 +2850,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     role<T extends RoleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RoleDefaultArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tokens<T extends User$tokensArgs<ExtArgs> = {}>(args?: Subset<T, User$tokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvalidTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3155,6 +3283,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.tokens
+   */
+  export type User$tokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvalidToken
+     */
+    select?: InvalidTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvalidToken
+     */
+    omit?: InvalidTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvalidTokenInclude<ExtArgs> | null
+    where?: InvalidTokenWhereInput
+    orderBy?: InvalidTokenOrderByWithRelationInput | InvalidTokenOrderByWithRelationInput[]
+    cursor?: InvalidTokenWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InvalidTokenScalarFieldEnum | InvalidTokenScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3170,6 +3322,1072 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model InvalidToken
+   */
+
+  export type AggregateInvalidToken = {
+    _count: InvalidTokenCountAggregateOutputType | null
+    _avg: InvalidTokenAvgAggregateOutputType | null
+    _sum: InvalidTokenSumAggregateOutputType | null
+    _min: InvalidTokenMinAggregateOutputType | null
+    _max: InvalidTokenMaxAggregateOutputType | null
+  }
+
+  export type InvalidTokenAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type InvalidTokenSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type InvalidTokenMinAggregateOutputType = {
+    id: number | null
+    token: string | null
+    user_id: string | null
+  }
+
+  export type InvalidTokenMaxAggregateOutputType = {
+    id: number | null
+    token: string | null
+    user_id: string | null
+  }
+
+  export type InvalidTokenCountAggregateOutputType = {
+    id: number
+    token: number
+    user_id: number
+    _all: number
+  }
+
+
+  export type InvalidTokenAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type InvalidTokenSumAggregateInputType = {
+    id?: true
+  }
+
+  export type InvalidTokenMinAggregateInputType = {
+    id?: true
+    token?: true
+    user_id?: true
+  }
+
+  export type InvalidTokenMaxAggregateInputType = {
+    id?: true
+    token?: true
+    user_id?: true
+  }
+
+  export type InvalidTokenCountAggregateInputType = {
+    id?: true
+    token?: true
+    user_id?: true
+    _all?: true
+  }
+
+  export type InvalidTokenAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InvalidToken to aggregate.
+     */
+    where?: InvalidTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvalidTokens to fetch.
+     */
+    orderBy?: InvalidTokenOrderByWithRelationInput | InvalidTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InvalidTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvalidTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvalidTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InvalidTokens
+    **/
+    _count?: true | InvalidTokenCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: InvalidTokenAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: InvalidTokenSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InvalidTokenMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InvalidTokenMaxAggregateInputType
+  }
+
+  export type GetInvalidTokenAggregateType<T extends InvalidTokenAggregateArgs> = {
+        [P in keyof T & keyof AggregateInvalidToken]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInvalidToken[P]>
+      : GetScalarType<T[P], AggregateInvalidToken[P]>
+  }
+
+
+
+
+  export type InvalidTokenGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InvalidTokenWhereInput
+    orderBy?: InvalidTokenOrderByWithAggregationInput | InvalidTokenOrderByWithAggregationInput[]
+    by: InvalidTokenScalarFieldEnum[] | InvalidTokenScalarFieldEnum
+    having?: InvalidTokenScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InvalidTokenCountAggregateInputType | true
+    _avg?: InvalidTokenAvgAggregateInputType
+    _sum?: InvalidTokenSumAggregateInputType
+    _min?: InvalidTokenMinAggregateInputType
+    _max?: InvalidTokenMaxAggregateInputType
+  }
+
+  export type InvalidTokenGroupByOutputType = {
+    id: number
+    token: string
+    user_id: string
+    _count: InvalidTokenCountAggregateOutputType | null
+    _avg: InvalidTokenAvgAggregateOutputType | null
+    _sum: InvalidTokenSumAggregateOutputType | null
+    _min: InvalidTokenMinAggregateOutputType | null
+    _max: InvalidTokenMaxAggregateOutputType | null
+  }
+
+  type GetInvalidTokenGroupByPayload<T extends InvalidTokenGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InvalidTokenGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InvalidTokenGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InvalidTokenGroupByOutputType[P]>
+            : GetScalarType<T[P], InvalidTokenGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InvalidTokenSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    token?: boolean
+    user_id?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["invalidToken"]>
+
+  export type InvalidTokenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    token?: boolean
+    user_id?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["invalidToken"]>
+
+  export type InvalidTokenSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    token?: boolean
+    user_id?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["invalidToken"]>
+
+  export type InvalidTokenSelectScalar = {
+    id?: boolean
+    token?: boolean
+    user_id?: boolean
+  }
+
+  export type InvalidTokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "token" | "user_id", ExtArgs["result"]["invalidToken"]>
+  export type InvalidTokenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type InvalidTokenIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type InvalidTokenIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $InvalidTokenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InvalidToken"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      token: string
+      user_id: string
+    }, ExtArgs["result"]["invalidToken"]>
+    composites: {}
+  }
+
+  type InvalidTokenGetPayload<S extends boolean | null | undefined | InvalidTokenDefaultArgs> = $Result.GetResult<Prisma.$InvalidTokenPayload, S>
+
+  type InvalidTokenCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InvalidTokenFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InvalidTokenCountAggregateInputType | true
+    }
+
+  export interface InvalidTokenDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InvalidToken'], meta: { name: 'InvalidToken' } }
+    /**
+     * Find zero or one InvalidToken that matches the filter.
+     * @param {InvalidTokenFindUniqueArgs} args - Arguments to find a InvalidToken
+     * @example
+     * // Get one InvalidToken
+     * const invalidToken = await prisma.invalidToken.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InvalidTokenFindUniqueArgs>(args: SelectSubset<T, InvalidTokenFindUniqueArgs<ExtArgs>>): Prisma__InvalidTokenClient<$Result.GetResult<Prisma.$InvalidTokenPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InvalidToken that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InvalidTokenFindUniqueOrThrowArgs} args - Arguments to find a InvalidToken
+     * @example
+     * // Get one InvalidToken
+     * const invalidToken = await prisma.invalidToken.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InvalidTokenFindUniqueOrThrowArgs>(args: SelectSubset<T, InvalidTokenFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InvalidTokenClient<$Result.GetResult<Prisma.$InvalidTokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InvalidToken that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvalidTokenFindFirstArgs} args - Arguments to find a InvalidToken
+     * @example
+     * // Get one InvalidToken
+     * const invalidToken = await prisma.invalidToken.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InvalidTokenFindFirstArgs>(args?: SelectSubset<T, InvalidTokenFindFirstArgs<ExtArgs>>): Prisma__InvalidTokenClient<$Result.GetResult<Prisma.$InvalidTokenPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InvalidToken that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvalidTokenFindFirstOrThrowArgs} args - Arguments to find a InvalidToken
+     * @example
+     * // Get one InvalidToken
+     * const invalidToken = await prisma.invalidToken.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InvalidTokenFindFirstOrThrowArgs>(args?: SelectSubset<T, InvalidTokenFindFirstOrThrowArgs<ExtArgs>>): Prisma__InvalidTokenClient<$Result.GetResult<Prisma.$InvalidTokenPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InvalidTokens that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvalidTokenFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InvalidTokens
+     * const invalidTokens = await prisma.invalidToken.findMany()
+     * 
+     * // Get first 10 InvalidTokens
+     * const invalidTokens = await prisma.invalidToken.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const invalidTokenWithIdOnly = await prisma.invalidToken.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InvalidTokenFindManyArgs>(args?: SelectSubset<T, InvalidTokenFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvalidTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InvalidToken.
+     * @param {InvalidTokenCreateArgs} args - Arguments to create a InvalidToken.
+     * @example
+     * // Create one InvalidToken
+     * const InvalidToken = await prisma.invalidToken.create({
+     *   data: {
+     *     // ... data to create a InvalidToken
+     *   }
+     * })
+     * 
+     */
+    create<T extends InvalidTokenCreateArgs>(args: SelectSubset<T, InvalidTokenCreateArgs<ExtArgs>>): Prisma__InvalidTokenClient<$Result.GetResult<Prisma.$InvalidTokenPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InvalidTokens.
+     * @param {InvalidTokenCreateManyArgs} args - Arguments to create many InvalidTokens.
+     * @example
+     * // Create many InvalidTokens
+     * const invalidToken = await prisma.invalidToken.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InvalidTokenCreateManyArgs>(args?: SelectSubset<T, InvalidTokenCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InvalidTokens and returns the data saved in the database.
+     * @param {InvalidTokenCreateManyAndReturnArgs} args - Arguments to create many InvalidTokens.
+     * @example
+     * // Create many InvalidTokens
+     * const invalidToken = await prisma.invalidToken.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InvalidTokens and only return the `id`
+     * const invalidTokenWithIdOnly = await prisma.invalidToken.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InvalidTokenCreateManyAndReturnArgs>(args?: SelectSubset<T, InvalidTokenCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvalidTokenPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a InvalidToken.
+     * @param {InvalidTokenDeleteArgs} args - Arguments to delete one InvalidToken.
+     * @example
+     * // Delete one InvalidToken
+     * const InvalidToken = await prisma.invalidToken.delete({
+     *   where: {
+     *     // ... filter to delete one InvalidToken
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InvalidTokenDeleteArgs>(args: SelectSubset<T, InvalidTokenDeleteArgs<ExtArgs>>): Prisma__InvalidTokenClient<$Result.GetResult<Prisma.$InvalidTokenPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InvalidToken.
+     * @param {InvalidTokenUpdateArgs} args - Arguments to update one InvalidToken.
+     * @example
+     * // Update one InvalidToken
+     * const invalidToken = await prisma.invalidToken.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InvalidTokenUpdateArgs>(args: SelectSubset<T, InvalidTokenUpdateArgs<ExtArgs>>): Prisma__InvalidTokenClient<$Result.GetResult<Prisma.$InvalidTokenPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InvalidTokens.
+     * @param {InvalidTokenDeleteManyArgs} args - Arguments to filter InvalidTokens to delete.
+     * @example
+     * // Delete a few InvalidTokens
+     * const { count } = await prisma.invalidToken.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InvalidTokenDeleteManyArgs>(args?: SelectSubset<T, InvalidTokenDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InvalidTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvalidTokenUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InvalidTokens
+     * const invalidToken = await prisma.invalidToken.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InvalidTokenUpdateManyArgs>(args: SelectSubset<T, InvalidTokenUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InvalidTokens and returns the data updated in the database.
+     * @param {InvalidTokenUpdateManyAndReturnArgs} args - Arguments to update many InvalidTokens.
+     * @example
+     * // Update many InvalidTokens
+     * const invalidToken = await prisma.invalidToken.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InvalidTokens and only return the `id`
+     * const invalidTokenWithIdOnly = await prisma.invalidToken.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InvalidTokenUpdateManyAndReturnArgs>(args: SelectSubset<T, InvalidTokenUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvalidTokenPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one InvalidToken.
+     * @param {InvalidTokenUpsertArgs} args - Arguments to update or create a InvalidToken.
+     * @example
+     * // Update or create a InvalidToken
+     * const invalidToken = await prisma.invalidToken.upsert({
+     *   create: {
+     *     // ... data to create a InvalidToken
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InvalidToken we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InvalidTokenUpsertArgs>(args: SelectSubset<T, InvalidTokenUpsertArgs<ExtArgs>>): Prisma__InvalidTokenClient<$Result.GetResult<Prisma.$InvalidTokenPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InvalidTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvalidTokenCountArgs} args - Arguments to filter InvalidTokens to count.
+     * @example
+     * // Count the number of InvalidTokens
+     * const count = await prisma.invalidToken.count({
+     *   where: {
+     *     // ... the filter for the InvalidTokens we want to count
+     *   }
+     * })
+    **/
+    count<T extends InvalidTokenCountArgs>(
+      args?: Subset<T, InvalidTokenCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InvalidTokenCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InvalidToken.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvalidTokenAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InvalidTokenAggregateArgs>(args: Subset<T, InvalidTokenAggregateArgs>): Prisma.PrismaPromise<GetInvalidTokenAggregateType<T>>
+
+    /**
+     * Group by InvalidToken.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvalidTokenGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InvalidTokenGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InvalidTokenGroupByArgs['orderBy'] }
+        : { orderBy?: InvalidTokenGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InvalidTokenGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInvalidTokenGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InvalidToken model
+   */
+  readonly fields: InvalidTokenFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InvalidToken.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InvalidTokenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InvalidToken model
+   */
+  interface InvalidTokenFieldRefs {
+    readonly id: FieldRef<"InvalidToken", 'Int'>
+    readonly token: FieldRef<"InvalidToken", 'String'>
+    readonly user_id: FieldRef<"InvalidToken", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InvalidToken findUnique
+   */
+  export type InvalidTokenFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvalidToken
+     */
+    select?: InvalidTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvalidToken
+     */
+    omit?: InvalidTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvalidTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which InvalidToken to fetch.
+     */
+    where: InvalidTokenWhereUniqueInput
+  }
+
+  /**
+   * InvalidToken findUniqueOrThrow
+   */
+  export type InvalidTokenFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvalidToken
+     */
+    select?: InvalidTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvalidToken
+     */
+    omit?: InvalidTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvalidTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which InvalidToken to fetch.
+     */
+    where: InvalidTokenWhereUniqueInput
+  }
+
+  /**
+   * InvalidToken findFirst
+   */
+  export type InvalidTokenFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvalidToken
+     */
+    select?: InvalidTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvalidToken
+     */
+    omit?: InvalidTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvalidTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which InvalidToken to fetch.
+     */
+    where?: InvalidTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvalidTokens to fetch.
+     */
+    orderBy?: InvalidTokenOrderByWithRelationInput | InvalidTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InvalidTokens.
+     */
+    cursor?: InvalidTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvalidTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvalidTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InvalidTokens.
+     */
+    distinct?: InvalidTokenScalarFieldEnum | InvalidTokenScalarFieldEnum[]
+  }
+
+  /**
+   * InvalidToken findFirstOrThrow
+   */
+  export type InvalidTokenFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvalidToken
+     */
+    select?: InvalidTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvalidToken
+     */
+    omit?: InvalidTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvalidTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which InvalidToken to fetch.
+     */
+    where?: InvalidTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvalidTokens to fetch.
+     */
+    orderBy?: InvalidTokenOrderByWithRelationInput | InvalidTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InvalidTokens.
+     */
+    cursor?: InvalidTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvalidTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvalidTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InvalidTokens.
+     */
+    distinct?: InvalidTokenScalarFieldEnum | InvalidTokenScalarFieldEnum[]
+  }
+
+  /**
+   * InvalidToken findMany
+   */
+  export type InvalidTokenFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvalidToken
+     */
+    select?: InvalidTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvalidToken
+     */
+    omit?: InvalidTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvalidTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which InvalidTokens to fetch.
+     */
+    where?: InvalidTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvalidTokens to fetch.
+     */
+    orderBy?: InvalidTokenOrderByWithRelationInput | InvalidTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InvalidTokens.
+     */
+    cursor?: InvalidTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvalidTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvalidTokens.
+     */
+    skip?: number
+    distinct?: InvalidTokenScalarFieldEnum | InvalidTokenScalarFieldEnum[]
+  }
+
+  /**
+   * InvalidToken create
+   */
+  export type InvalidTokenCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvalidToken
+     */
+    select?: InvalidTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvalidToken
+     */
+    omit?: InvalidTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvalidTokenInclude<ExtArgs> | null
+    /**
+     * The data needed to create a InvalidToken.
+     */
+    data: XOR<InvalidTokenCreateInput, InvalidTokenUncheckedCreateInput>
+  }
+
+  /**
+   * InvalidToken createMany
+   */
+  export type InvalidTokenCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InvalidTokens.
+     */
+    data: InvalidTokenCreateManyInput | InvalidTokenCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InvalidToken createManyAndReturn
+   */
+  export type InvalidTokenCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvalidToken
+     */
+    select?: InvalidTokenSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvalidToken
+     */
+    omit?: InvalidTokenOmit<ExtArgs> | null
+    /**
+     * The data used to create many InvalidTokens.
+     */
+    data: InvalidTokenCreateManyInput | InvalidTokenCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvalidTokenIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InvalidToken update
+   */
+  export type InvalidTokenUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvalidToken
+     */
+    select?: InvalidTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvalidToken
+     */
+    omit?: InvalidTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvalidTokenInclude<ExtArgs> | null
+    /**
+     * The data needed to update a InvalidToken.
+     */
+    data: XOR<InvalidTokenUpdateInput, InvalidTokenUncheckedUpdateInput>
+    /**
+     * Choose, which InvalidToken to update.
+     */
+    where: InvalidTokenWhereUniqueInput
+  }
+
+  /**
+   * InvalidToken updateMany
+   */
+  export type InvalidTokenUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InvalidTokens.
+     */
+    data: XOR<InvalidTokenUpdateManyMutationInput, InvalidTokenUncheckedUpdateManyInput>
+    /**
+     * Filter which InvalidTokens to update
+     */
+    where?: InvalidTokenWhereInput
+    /**
+     * Limit how many InvalidTokens to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InvalidToken updateManyAndReturn
+   */
+  export type InvalidTokenUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvalidToken
+     */
+    select?: InvalidTokenSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvalidToken
+     */
+    omit?: InvalidTokenOmit<ExtArgs> | null
+    /**
+     * The data used to update InvalidTokens.
+     */
+    data: XOR<InvalidTokenUpdateManyMutationInput, InvalidTokenUncheckedUpdateManyInput>
+    /**
+     * Filter which InvalidTokens to update
+     */
+    where?: InvalidTokenWhereInput
+    /**
+     * Limit how many InvalidTokens to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvalidTokenIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InvalidToken upsert
+   */
+  export type InvalidTokenUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvalidToken
+     */
+    select?: InvalidTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvalidToken
+     */
+    omit?: InvalidTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvalidTokenInclude<ExtArgs> | null
+    /**
+     * The filter to search for the InvalidToken to update in case it exists.
+     */
+    where: InvalidTokenWhereUniqueInput
+    /**
+     * In case the InvalidToken found by the `where` argument doesn't exist, create a new InvalidToken with this data.
+     */
+    create: XOR<InvalidTokenCreateInput, InvalidTokenUncheckedCreateInput>
+    /**
+     * In case the InvalidToken was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InvalidTokenUpdateInput, InvalidTokenUncheckedUpdateInput>
+  }
+
+  /**
+   * InvalidToken delete
+   */
+  export type InvalidTokenDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvalidToken
+     */
+    select?: InvalidTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvalidToken
+     */
+    omit?: InvalidTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvalidTokenInclude<ExtArgs> | null
+    /**
+     * Filter which InvalidToken to delete.
+     */
+    where: InvalidTokenWhereUniqueInput
+  }
+
+  /**
+   * InvalidToken deleteMany
+   */
+  export type InvalidTokenDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InvalidTokens to delete
+     */
+    where?: InvalidTokenWhereInput
+    /**
+     * Limit how many InvalidTokens to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InvalidToken without action
+   */
+  export type InvalidTokenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvalidToken
+     */
+    select?: InvalidTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvalidToken
+     */
+    omit?: InvalidTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvalidTokenInclude<ExtArgs> | null
   }
 
 
@@ -3206,6 +4424,15 @@ export namespace Prisma {
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const InvalidTokenScalarFieldEnum: {
+    id: 'id',
+    token: 'token',
+    user_id: 'user_id'
+  };
+
+  export type InvalidTokenScalarFieldEnum = (typeof InvalidTokenScalarFieldEnum)[keyof typeof InvalidTokenScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3328,6 +4555,7 @@ export namespace Prisma {
     phone_number?: StringFilter<"User"> | string
     role_id?: IntFilter<"User"> | number
     role?: XOR<RoleScalarRelationFilter, RoleWhereInput>
+    tokens?: InvalidTokenListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -3339,6 +4567,7 @@ export namespace Prisma {
     phone_number?: SortOrder
     role_id?: SortOrder
     role?: RoleOrderByWithRelationInput
+    tokens?: InvalidTokenOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3353,6 +4582,7 @@ export namespace Prisma {
     phone_number?: StringFilter<"User"> | string
     role_id?: IntFilter<"User"> | number
     role?: XOR<RoleScalarRelationFilter, RoleWhereInput>
+    tokens?: InvalidTokenListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -3381,6 +4611,53 @@ export namespace Prisma {
     last_name?: StringWithAggregatesFilter<"User"> | string
     phone_number?: StringWithAggregatesFilter<"User"> | string
     role_id?: IntWithAggregatesFilter<"User"> | number
+  }
+
+  export type InvalidTokenWhereInput = {
+    AND?: InvalidTokenWhereInput | InvalidTokenWhereInput[]
+    OR?: InvalidTokenWhereInput[]
+    NOT?: InvalidTokenWhereInput | InvalidTokenWhereInput[]
+    id?: IntFilter<"InvalidToken"> | number
+    token?: StringFilter<"InvalidToken"> | string
+    user_id?: StringFilter<"InvalidToken"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type InvalidTokenOrderByWithRelationInput = {
+    id?: SortOrder
+    token?: SortOrder
+    user_id?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type InvalidTokenWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: InvalidTokenWhereInput | InvalidTokenWhereInput[]
+    OR?: InvalidTokenWhereInput[]
+    NOT?: InvalidTokenWhereInput | InvalidTokenWhereInput[]
+    token?: StringFilter<"InvalidToken"> | string
+    user_id?: StringFilter<"InvalidToken"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type InvalidTokenOrderByWithAggregationInput = {
+    id?: SortOrder
+    token?: SortOrder
+    user_id?: SortOrder
+    _count?: InvalidTokenCountOrderByAggregateInput
+    _avg?: InvalidTokenAvgOrderByAggregateInput
+    _max?: InvalidTokenMaxOrderByAggregateInput
+    _min?: InvalidTokenMinOrderByAggregateInput
+    _sum?: InvalidTokenSumOrderByAggregateInput
+  }
+
+  export type InvalidTokenScalarWhereWithAggregatesInput = {
+    AND?: InvalidTokenScalarWhereWithAggregatesInput | InvalidTokenScalarWhereWithAggregatesInput[]
+    OR?: InvalidTokenScalarWhereWithAggregatesInput[]
+    NOT?: InvalidTokenScalarWhereWithAggregatesInput | InvalidTokenScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"InvalidToken"> | number
+    token?: StringWithAggregatesFilter<"InvalidToken"> | string
+    user_id?: StringWithAggregatesFilter<"InvalidToken"> | string
   }
 
   export type RoleCreateInput = {
@@ -3427,6 +4704,7 @@ export namespace Prisma {
     last_name: string
     phone_number: string
     role: RoleCreateNestedOneWithoutUsersInput
+    tokens?: InvalidTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3437,6 +4715,7 @@ export namespace Prisma {
     last_name: string
     phone_number: string
     role_id: number
+    tokens?: InvalidTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -3447,6 +4726,7 @@ export namespace Prisma {
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: StringFieldUpdateOperationsInput | string
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
+    tokens?: InvalidTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -3457,6 +4737,7 @@ export namespace Prisma {
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: StringFieldUpdateOperationsInput | string
     role_id?: IntFieldUpdateOperationsInput | number
+    tokens?: InvalidTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3486,6 +4767,44 @@ export namespace Prisma {
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: StringFieldUpdateOperationsInput | string
     role_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type InvalidTokenCreateInput = {
+    token: string
+    user: UserCreateNestedOneWithoutTokensInput
+  }
+
+  export type InvalidTokenUncheckedCreateInput = {
+    id?: number
+    token: string
+    user_id: string
+  }
+
+  export type InvalidTokenUpdateInput = {
+    token?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutTokensNestedInput
+  }
+
+  export type InvalidTokenUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    token?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type InvalidTokenCreateManyInput = {
+    id?: number
+    token: string
+    user_id: string
+  }
+
+  export type InvalidTokenUpdateManyMutationInput = {
+    token?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type InvalidTokenUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    token?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -3586,6 +4905,16 @@ export namespace Prisma {
     isNot?: RoleWhereInput
   }
 
+  export type InvalidTokenListRelationFilter = {
+    every?: InvalidTokenWhereInput
+    some?: InvalidTokenWhereInput
+    none?: InvalidTokenWhereInput
+  }
+
+  export type InvalidTokenOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
@@ -3622,6 +4951,37 @@ export namespace Prisma {
 
   export type UserSumOrderByAggregateInput = {
     role_id?: SortOrder
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type InvalidTokenCountOrderByAggregateInput = {
+    id?: SortOrder
+    token?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type InvalidTokenAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type InvalidTokenMaxOrderByAggregateInput = {
+    id?: SortOrder
+    token?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type InvalidTokenMinOrderByAggregateInput = {
+    id?: SortOrder
+    token?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type InvalidTokenSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -3684,12 +5044,68 @@ export namespace Prisma {
     connect?: RoleWhereUniqueInput
   }
 
+  export type InvalidTokenCreateNestedManyWithoutUserInput = {
+    create?: XOR<InvalidTokenCreateWithoutUserInput, InvalidTokenUncheckedCreateWithoutUserInput> | InvalidTokenCreateWithoutUserInput[] | InvalidTokenUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InvalidTokenCreateOrConnectWithoutUserInput | InvalidTokenCreateOrConnectWithoutUserInput[]
+    createMany?: InvalidTokenCreateManyUserInputEnvelope
+    connect?: InvalidTokenWhereUniqueInput | InvalidTokenWhereUniqueInput[]
+  }
+
+  export type InvalidTokenUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<InvalidTokenCreateWithoutUserInput, InvalidTokenUncheckedCreateWithoutUserInput> | InvalidTokenCreateWithoutUserInput[] | InvalidTokenUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InvalidTokenCreateOrConnectWithoutUserInput | InvalidTokenCreateOrConnectWithoutUserInput[]
+    createMany?: InvalidTokenCreateManyUserInputEnvelope
+    connect?: InvalidTokenWhereUniqueInput | InvalidTokenWhereUniqueInput[]
+  }
+
   export type RoleUpdateOneRequiredWithoutUsersNestedInput = {
     create?: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
     connectOrCreate?: RoleCreateOrConnectWithoutUsersInput
     upsert?: RoleUpsertWithoutUsersInput
     connect?: RoleWhereUniqueInput
     update?: XOR<XOR<RoleUpdateToOneWithWhereWithoutUsersInput, RoleUpdateWithoutUsersInput>, RoleUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type InvalidTokenUpdateManyWithoutUserNestedInput = {
+    create?: XOR<InvalidTokenCreateWithoutUserInput, InvalidTokenUncheckedCreateWithoutUserInput> | InvalidTokenCreateWithoutUserInput[] | InvalidTokenUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InvalidTokenCreateOrConnectWithoutUserInput | InvalidTokenCreateOrConnectWithoutUserInput[]
+    upsert?: InvalidTokenUpsertWithWhereUniqueWithoutUserInput | InvalidTokenUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: InvalidTokenCreateManyUserInputEnvelope
+    set?: InvalidTokenWhereUniqueInput | InvalidTokenWhereUniqueInput[]
+    disconnect?: InvalidTokenWhereUniqueInput | InvalidTokenWhereUniqueInput[]
+    delete?: InvalidTokenWhereUniqueInput | InvalidTokenWhereUniqueInput[]
+    connect?: InvalidTokenWhereUniqueInput | InvalidTokenWhereUniqueInput[]
+    update?: InvalidTokenUpdateWithWhereUniqueWithoutUserInput | InvalidTokenUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: InvalidTokenUpdateManyWithWhereWithoutUserInput | InvalidTokenUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: InvalidTokenScalarWhereInput | InvalidTokenScalarWhereInput[]
+  }
+
+  export type InvalidTokenUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<InvalidTokenCreateWithoutUserInput, InvalidTokenUncheckedCreateWithoutUserInput> | InvalidTokenCreateWithoutUserInput[] | InvalidTokenUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InvalidTokenCreateOrConnectWithoutUserInput | InvalidTokenCreateOrConnectWithoutUserInput[]
+    upsert?: InvalidTokenUpsertWithWhereUniqueWithoutUserInput | InvalidTokenUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: InvalidTokenCreateManyUserInputEnvelope
+    set?: InvalidTokenWhereUniqueInput | InvalidTokenWhereUniqueInput[]
+    disconnect?: InvalidTokenWhereUniqueInput | InvalidTokenWhereUniqueInput[]
+    delete?: InvalidTokenWhereUniqueInput | InvalidTokenWhereUniqueInput[]
+    connect?: InvalidTokenWhereUniqueInput | InvalidTokenWhereUniqueInput[]
+    update?: InvalidTokenUpdateWithWhereUniqueWithoutUserInput | InvalidTokenUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: InvalidTokenUpdateManyWithWhereWithoutUserInput | InvalidTokenUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: InvalidTokenScalarWhereInput | InvalidTokenScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutTokensInput = {
+    create?: XOR<UserCreateWithoutTokensInput, UserUncheckedCreateWithoutTokensInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTokensInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutTokensNestedInput = {
+    create?: XOR<UserCreateWithoutTokensInput, UserUncheckedCreateWithoutTokensInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTokensInput
+    upsert?: UserUpsertWithoutTokensInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTokensInput, UserUpdateWithoutTokensInput>, UserUncheckedUpdateWithoutTokensInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -3768,6 +5184,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number: string
+    tokens?: InvalidTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRoleInput = {
@@ -3777,6 +5194,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number: string
+    tokens?: InvalidTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRoleInput = {
@@ -3832,6 +5250,25 @@ export namespace Prisma {
     create: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
   }
 
+  export type InvalidTokenCreateWithoutUserInput = {
+    token: string
+  }
+
+  export type InvalidTokenUncheckedCreateWithoutUserInput = {
+    id?: number
+    token: string
+  }
+
+  export type InvalidTokenCreateOrConnectWithoutUserInput = {
+    where: InvalidTokenWhereUniqueInput
+    create: XOR<InvalidTokenCreateWithoutUserInput, InvalidTokenUncheckedCreateWithoutUserInput>
+  }
+
+  export type InvalidTokenCreateManyUserInputEnvelope = {
+    data: InvalidTokenCreateManyUserInput | InvalidTokenCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type RoleUpsertWithoutUsersInput = {
     update: XOR<RoleUpdateWithoutUsersInput, RoleUncheckedUpdateWithoutUsersInput>
     create: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
@@ -3852,6 +5289,87 @@ export namespace Prisma {
     role_name?: StringFieldUpdateOperationsInput | string
   }
 
+  export type InvalidTokenUpsertWithWhereUniqueWithoutUserInput = {
+    where: InvalidTokenWhereUniqueInput
+    update: XOR<InvalidTokenUpdateWithoutUserInput, InvalidTokenUncheckedUpdateWithoutUserInput>
+    create: XOR<InvalidTokenCreateWithoutUserInput, InvalidTokenUncheckedCreateWithoutUserInput>
+  }
+
+  export type InvalidTokenUpdateWithWhereUniqueWithoutUserInput = {
+    where: InvalidTokenWhereUniqueInput
+    data: XOR<InvalidTokenUpdateWithoutUserInput, InvalidTokenUncheckedUpdateWithoutUserInput>
+  }
+
+  export type InvalidTokenUpdateManyWithWhereWithoutUserInput = {
+    where: InvalidTokenScalarWhereInput
+    data: XOR<InvalidTokenUpdateManyMutationInput, InvalidTokenUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type InvalidTokenScalarWhereInput = {
+    AND?: InvalidTokenScalarWhereInput | InvalidTokenScalarWhereInput[]
+    OR?: InvalidTokenScalarWhereInput[]
+    NOT?: InvalidTokenScalarWhereInput | InvalidTokenScalarWhereInput[]
+    id?: IntFilter<"InvalidToken"> | number
+    token?: StringFilter<"InvalidToken"> | string
+    user_id?: StringFilter<"InvalidToken"> | string
+  }
+
+  export type UserCreateWithoutTokensInput = {
+    id?: string
+    email: string
+    password: string
+    first_name: string
+    last_name: string
+    phone_number: string
+    role: RoleCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserUncheckedCreateWithoutTokensInput = {
+    id?: string
+    email: string
+    password: string
+    first_name: string
+    last_name: string
+    phone_number: string
+    role_id: number
+  }
+
+  export type UserCreateOrConnectWithoutTokensInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTokensInput, UserUncheckedCreateWithoutTokensInput>
+  }
+
+  export type UserUpsertWithoutTokensInput = {
+    update: XOR<UserUpdateWithoutTokensInput, UserUncheckedUpdateWithoutTokensInput>
+    create: XOR<UserCreateWithoutTokensInput, UserUncheckedCreateWithoutTokensInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTokensInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTokensInput, UserUncheckedUpdateWithoutTokensInput>
+  }
+
+  export type UserUpdateWithoutTokensInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    phone_number?: StringFieldUpdateOperationsInput | string
+    role?: RoleUpdateOneRequiredWithoutUsersNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTokensInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    phone_number?: StringFieldUpdateOperationsInput | string
+    role_id?: IntFieldUpdateOperationsInput | number
+  }
+
   export type UserCreateManyRoleInput = {
     id?: string
     email: string
@@ -3868,6 +5386,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: StringFieldUpdateOperationsInput | string
+    tokens?: InvalidTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRoleInput = {
@@ -3877,6 +5396,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: StringFieldUpdateOperationsInput | string
+    tokens?: InvalidTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutRoleInput = {
@@ -3886,6 +5406,25 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type InvalidTokenCreateManyUserInput = {
+    id?: number
+    token: string
+  }
+
+  export type InvalidTokenUpdateWithoutUserInput = {
+    token?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type InvalidTokenUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    token?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type InvalidTokenUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    token?: StringFieldUpdateOperationsInput | string
   }
 
 

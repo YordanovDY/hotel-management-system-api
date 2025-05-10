@@ -6,7 +6,8 @@ import { loginSchema, registerSchema } from '../validators/user.schema';
 import { extractErrorMessage } from '../utils/error-util';
 import { SALT_ROUNDS } from '../config/constants';
 
-const prisma = new PrismaClient().user;
+const UserClient = new PrismaClient().user;
+const TokenClient = new PrismaClient().invalidToken;
 
 async function register(data: RegisterBody): Promise<User> {
     const validatedData = registerSchema.safeParse(data);
@@ -16,7 +17,7 @@ async function register(data: RegisterBody): Promise<User> {
         throw new Error(`Validation Error: ${validationError}`);
     }
 
-    const foundUser = await prisma.findFirst({
+    const foundUser = await UserClient.findFirst({
         where: {
             email: validatedData.data.email
         }
@@ -27,7 +28,7 @@ async function register(data: RegisterBody): Promise<User> {
     }
 
     const hashedPassword = await bcrypt.hash(data.password, SALT_ROUNDS);
-    const newUser = await prisma.create({ data: { ...validatedData.data, password: hashedPassword } });
+    const newUser = await UserClient.create({ data: { ...validatedData.data, password: hashedPassword } });
 
     return {
         id: newUser.id,
@@ -47,7 +48,7 @@ async function login(data: LoginBody): Promise<User> {
         throw new Error(`Validation Error: ${validationError}`);
     }
 
-    const foundUser = await prisma.findFirst({
+    const foundUser = await UserClient.findFirst({
         where: {
             email: validatedData.data.email
         }
@@ -73,9 +74,19 @@ async function login(data: LoginBody): Promise<User> {
     }
 }
 
+async function logout(token: string, userId: string): Promise<void> {
+    await TokenClient.create({
+        data: {
+            token,
+            user_id: userId
+        }
+    })
+}
+
 const authService = {
     register,
     login,
+    logout
 }
 
 export default authService;
