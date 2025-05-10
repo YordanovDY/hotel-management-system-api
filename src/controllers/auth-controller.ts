@@ -71,3 +71,8 @@ export async function loginController(req: Request<{}, {}, LoginBody>, res: Resp
         res.errors.internalServerError();
     }
 }
+
+export async function logoutController(req: Request, res: Response) {
+    res.clearCookie(AUTH_COOKIE_NAME);
+    res.status(204).end();
+}
