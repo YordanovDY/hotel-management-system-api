@@ -1,19 +1,19 @@
 export interface User {
     id: string;
     email: string;
-    first_name: string;
-    last_name: string;
-    phone_number: string;
-    role_id: number;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    roleId: number;
 }
 
 export interface UserToken {
     id: string;
     email: string;
-    first_name: string;
-    last_name: string;
-    phone_number: string;
-    role_id: number;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    roleId: number;
     iat: number;
     exp: number;
 }

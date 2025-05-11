@@ -4,7 +4,7 @@ import { PrismaClient } from "../generated/prisma";
 const EventClient = new PrismaClient().events;
 
 async function createUser(author: User, createdUser: User): Promise<void> {
-    const action = `${author.first_name} ${author.last_name} created a new profile: ${createdUser.email}`;
+    const action = `${author.firstName} ${author.lastName} created a new profile: ${createdUser.email}`;
     await EventClient.create({
         data: {
             action,
@@ -14,7 +14,7 @@ async function createUser(author: User, createdUser: User): Promise<void> {
 }
 
 async function login(user: User) {
-    const action = `${user.first_name} ${user.last_name} logged in.`;
+    const action = `${user.firstName} ${user.lastName} logged in.`;
     await EventClient.create({
         data: {
             action,
@@ -24,7 +24,7 @@ async function login(user: User) {
 }
 
 async function logout(user: User) {
-    const action = `${user.first_name} ${user.last_name} logged out.`;
+    const action = `${user.firstName} ${user.lastName} logged out.`;
     await EventClient.create({
         data: {
             action,

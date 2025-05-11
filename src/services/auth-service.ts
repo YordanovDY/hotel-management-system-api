@@ -28,15 +28,24 @@ async function register(data: RegisterBody): Promise<User> {
     }
 
     const hashedPassword = await bcrypt.hash(data.password, SALT_ROUNDS);
-    const newUser = await UserClient.create({ data: { ...validatedData.data, password: hashedPassword } });
+    const newUser = await UserClient.create({
+        data: {
+            email: validatedData.data.email,
+            password: hashedPassword,
+            first_name: validatedData.data.firstName,
+            last_name: validatedData.data.lastName,
+            phone_number: validatedData.data.phoneNumber,
+            role_id: validatedData.data.roleId
+        }
+    });
 
     return {
         id: newUser.id,
         email: newUser.email,
-        first_name: newUser.first_name,
-        last_name: newUser.last_name,
-        phone_number: newUser.phone_number,
-        role_id: newUser.role_id
+        firstName: newUser.first_name,
+        lastName: newUser.last_name,
+        phoneNumber: newUser.phone_number,
+        roleId: newUser.role_id
     };
 }
 
@@ -44,7 +53,7 @@ async function login(data: LoginBody): Promise<User> {
     const validatedData = loginSchema.safeParse(data);
 
     if (!validatedData.success) {
-        const validationError = extractErrorMessage<RegisterBody>(validatedData.error.format());
+        const validationError = extractErrorMessage<LoginBody>(validatedData.error.format());
         throw new Error(`Validation Error: ${validationError}`);
     }
 
@@ -67,10 +76,10 @@ async function login(data: LoginBody): Promise<User> {
     return {
         id: foundUser.id,
         email: foundUser.email,
-        first_name: foundUser.first_name,
-        last_name: foundUser.last_name,
-        phone_number: foundUser.phone_number,
-        role_id: foundUser.role_id
+        firstName: foundUser.first_name,
+        lastName: foundUser.last_name,
+        phoneNumber: foundUser.phone_number,
+        roleId: foundUser.role_id
     }
 }
 

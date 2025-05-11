@@ -3,13 +3,14 @@ import { z } from 'zod';
 export const registerSchema = z.object({
     email: z.string().email(),
     password: z.string().min(6),
-    first_name: z.string().min(1).max(50),
-    last_name: z.string().min(1).max(50),
-    phone_number: z.string().min(10).max(15),
-    role_id: z.number().int().min(1).max(2),
+    firstName: z.string().min(1).max(50),
+    lastName: z.string().min(1).max(50),
+    phoneNumber: z.string().min(10).max(15),
+    roleId: z.number().int().min(1).max(2),
 });
 
 export const loginSchema = z.object({
     email: z.string().email(),
     password: z.string().min(1),
 });
+
