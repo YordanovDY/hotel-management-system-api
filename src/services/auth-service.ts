@@ -27,7 +27,7 @@ async function register(data: RegisterBody): Promise<User> {
         throw new Error('Conflict: User already exists!');
     }
 
-    const hashedPassword = await bcrypt.hash(data.password, SALT_ROUNDS);
+    const hashedPassword = await bcrypt.hash(validatedData.data.password, SALT_ROUNDS);
     const newUser = await UserClient.create({
         data: {
             email: validatedData.data.email,

@@ -7,8 +7,6 @@ import { getDaysInMilliseconds } from "../utils/date-util";
 import eventService from "../services/event-service";
 import { User } from "../types/auth-types";
 
-// TODO: Create login, logout
-
 export async function registerController(req: Request<{}, {}, RegisterBody>, res: Response) {
     const data = req.body;
     const user = req.user as User;
