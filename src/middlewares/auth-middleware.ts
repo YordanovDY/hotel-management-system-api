@@ -50,3 +50,20 @@ export function requireToken(req: Request, res: Response, next: NextFunction) {
 
     next();
 }
+
+export function requireAdminPermissions(req: Request, res: Response, next: NextFunction) {
+    const user = req.user;
+    const msg = 'Forbidden: Permission denied!';
+
+    if (!user) {
+        res.errors.forbidden(msg);
+        return;
+    }
+
+    if (user.roleId !== 1) {
+        res.errors.forbidden(msg);
+        return;
+    }
+
+    next();
+}
