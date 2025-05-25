@@ -148,6 +148,17 @@ exports.Prisma.EventsScalarFieldEnum = {
   user_id: 'user_id'
 };
 
+exports.Prisma.RoomScalarFieldEnum = {
+  id: 'id',
+  room_number: 'room_number',
+  type: 'type',
+  exposure: 'exposure',
+  floor: 'floor',
+  beds_count: 'beds_count',
+  has_ac: 'has_ac',
+  price_per_night: 'price_per_night'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -163,7 +174,8 @@ exports.Prisma.ModelName = {
   Role: 'Role',
   User: 'User',
   InvalidToken: 'InvalidToken',
-  Events: 'Events'
+  Events: 'Events',
+  Room: 'Room'
 };
 
 /**

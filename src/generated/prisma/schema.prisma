@@ -47,3 +47,17 @@ model Events {
   user       User     @relation(fields: [user_id], references: [id])
   user_id    String
 }
+
+model Room {
+  id              String  @id @default(uuid())
+  room_number     String  @unique
+  type            String
+  exposure        String
+  floor           Int
+  beds_count      Int
+  has_ac          Boolean @default(false)
+  price_per_night Decimal @db.Decimal(10, 2)
+}
+
+// type: Single, Double, Apartment, President apartment
+// exposure: North, East, South, West
