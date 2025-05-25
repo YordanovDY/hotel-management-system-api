@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { loginController, logoutController, registerController, userController } from "../controllers/auth-controller";
 import { requireToken } from "../middlewares/auth-middleware";
+
 const authRouter = Router();
 
 authRouter.post('/login', loginController);
