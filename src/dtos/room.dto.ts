@@ -14,3 +14,7 @@ export interface RoomBody {
 export type RoomParams = {
     id: string
 }
+
+export type RoomQuery = {
+    bedsCount?: string
+}

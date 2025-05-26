@@ -1,10 +1,21 @@
 import { Request, Response } from "express";
-import { RoomBody, RoomParams } from "../dtos/room.dto";
+import { RoomBody, RoomParams, RoomQuery } from "../dtos/room.dto";
 import roomService from "../services/room-service";
 import eventService from "../services/event-service";
 
-function getRoomsController(req: Request, res: Response) {
+export async function getRoomsController(req: Request<{}, {}, {}, RoomQuery>, res: Response) {
+    const { bedsCount } = req.query;
 
+    try {
+        const result = bedsCount ?
+            await roomService.getAllRooms(Number(bedsCount))
+            : await roomService.getAllRooms();
+        res.json(result);
+
+    } catch (err) {
+        console.log(err);
+        res.errors.internalServerError();
+    }
 }
 
 export async function getRoomController(req: Request<RoomParams>, res: Response) {

@@ -45,16 +45,40 @@ async function getOneRoom(id: string) {
         }
     });
 
-    if(!foundRoom){
+    if (!foundRoom) {
         throw new Error(`Not Found: The room doesn't exist.`);
     }
 
     return foundRoom;
 }
 
+async function getAllRooms(bedsCount?: number) {
+    const where = bedsCount ?
+        {
+            beds_count: {
+                gte: bedsCount
+            }
+        }
+        : {};
+
+    return RoomClient.findMany({
+        select: {
+            id: true,
+            room_number: true,
+            type: true,
+            floor: true
+        },
+        where,
+        orderBy: {
+            floor: 'asc'
+        }
+    })
+}
+
 const roomService = {
     createRoom,
     getOneRoom,
+    getAllRooms,
 }
 
 export default roomService;
