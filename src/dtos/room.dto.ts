@@ -9,3 +9,8 @@ export interface RoomBody {
     hasAc: boolean,
     pricePerNight: number
 }
+
+
+export type RoomParams = {
+    id: string
+}

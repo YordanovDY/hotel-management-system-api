@@ -19,7 +19,7 @@ async function createRoom(data: RoomBody) {
         }
     })
 
-    if(foundRoom){
+    if (foundRoom) {
         throw new Error(`Conflict: Room ${foundRoom.room_number} already exists.`);
     }
 
@@ -38,8 +38,23 @@ async function createRoom(data: RoomBody) {
     return newRoom;
 }
 
+async function getOneRoom(id: string) {
+    const foundRoom = await RoomClient.findFirst({
+        where: {
+            id
+        }
+    });
+
+    if(!foundRoom){
+        throw new Error(`Not Found: The room doesn't exist.`);
+    }
+
+    return foundRoom;
+}
+
 const roomService = {
     createRoom,
+    getOneRoom,
 }
 
 export default roomService;

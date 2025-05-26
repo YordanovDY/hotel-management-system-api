@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { RoomBody } from "../dtos/room.dto";
-// import { User } from "../generated/prisma";
+import { RoomBody, RoomParams } from "../dtos/room.dto";
 import roomService from "../services/room-service";
 import eventService from "../services/event-service";
 
@@ -8,8 +7,25 @@ function getRoomsController(req: Request, res: Response) {
 
 }
 
-function getRoomController(req: Request, res: Response) {
+export async function getRoomController(req: Request<RoomParams>, res: Response) {
+    const { id } = req.params;
 
+    try {
+        const result = await roomService.getOneRoom(id);
+        res.json(result);
+
+    } catch (err) {
+        if (err instanceof Error) {
+            const message = err.message;
+            if (message.startsWith('Not Found')) {
+                res.errors.notFound(message);
+                return;
+            }
+        }
+
+        console.log(err);
+        res.errors.internalServerError();
+    }
 }
 
 export async function addRoomController(req: Request<{}, {}, RoomBody>, res: Response) {
