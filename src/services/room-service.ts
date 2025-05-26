@@ -2,6 +2,7 @@ import { RoomBody } from "../dtos/room.dto";
 import { extractErrorMessage } from "../utils/error-util";
 import { roomSchema } from "../validators/room.schema";
 import { PrismaClient } from "../generated/prisma";
+import { formatRooms } from "../utils/room-utils";
 
 const RoomClient = new PrismaClient().room;
 
@@ -49,7 +50,16 @@ async function getOneRoom(id: string) {
         throw new Error(`Not Found: The room doesn't exist.`);
     }
 
-    return foundRoom;
+    return {
+        id: foundRoom.id,
+        roomNumber: foundRoom.room_number,
+        type: foundRoom.type,
+        exposure: foundRoom.exposure,
+        floor: foundRoom.floor,
+        bedsCount: foundRoom.beds_count,
+        hasAc: foundRoom.has_ac,
+        pricePerNight: Number(foundRoom.price_per_night)
+    };
 }
 
 async function getAllRooms(bedsCount?: number) {
@@ -61,7 +71,7 @@ async function getAllRooms(bedsCount?: number) {
         }
         : {};
 
-    return RoomClient.findMany({
+    const result = await RoomClient.findMany({
         select: {
             id: true,
             room_number: true,
@@ -72,7 +82,11 @@ async function getAllRooms(bedsCount?: number) {
         orderBy: {
             floor: 'asc'
         }
-    })
+    });
+
+    const rooms = formatRooms(result);
+
+    return rooms;
 }
 
 const roomService = {
