@@ -36,7 +36,16 @@ async function createRoom(data: RoomBody) {
         }
     });
 
-    return newRoom;
+    return {
+        id: newRoom.id,
+        roomNumber: newRoom.room_number,
+        type: newRoom.type,
+        exposure: newRoom.exposure,
+        floor: newRoom.floor,
+        bedsCount: newRoom.beds_count,
+        hasAc: newRoom.has_ac,
+        pricePerNight: Number(newRoom.price_per_night)
+    };
 }
 
 async function getOneRoom(id: string) {

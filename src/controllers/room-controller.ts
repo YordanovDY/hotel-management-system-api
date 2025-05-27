@@ -49,7 +49,7 @@ export async function addRoomController(req: Request<{}, {}, RoomBody>, res: Res
 
     try {
         const result = await roomService.createRoom(data);
-        await eventService.createRoom(user, result.room_number);
+        await eventService.createRoom(user, result.roomNumber);
         res.status(201).json(result);
 
     } catch (err) {
