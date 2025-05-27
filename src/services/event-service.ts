@@ -43,11 +43,22 @@ async function createRoom(author: User, createdRoom: string): Promise<void> {
     })
 }
 
+async function deleteRoom(author: User, deletedRoom: string): Promise<void> {
+    const action = `${author.firstName} ${author.lastName} deleted a room: ${deletedRoom}`;
+    await EventClient.create({
+        data: {
+            action,
+            user_id: author.id
+        }
+    })
+}
+
 const eventService = {
     createUser,
     login,
     logout,
-    createRoom
+    createRoom,
+    deleteRoom,
 }
 
 export default eventService;

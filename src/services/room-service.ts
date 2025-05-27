@@ -101,10 +101,35 @@ async function getLastFloor(): Promise<number> {
     return result._max.floor || 1;
 }
 
+async function deleteRoom(id: string) {
+    try {
+        const result = await RoomClient.delete({
+            where: {
+                id
+            }
+        });
+
+        return {
+            id: result.id,
+            roomNumber: result.room_number,
+            type: result.type,
+            exposure: result.exposure,
+            floor: result.floor,
+            bedsCount: result.beds_count,
+            hasAc: result.has_ac,
+            pricePerNight: Number(result.price_per_night)
+        };
+
+    } catch (err) {
+        throw new Error(`Not Found: The room doesn't exist.`);
+    }
+}
+
 const roomService = {
     createRoom,
     getOneRoom,
     getAllRooms,
+    deleteRoom,
 }
 
 export default roomService;
