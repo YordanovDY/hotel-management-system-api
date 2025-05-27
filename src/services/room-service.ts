@@ -84,9 +84,21 @@ async function getAllRooms(bedsCount?: number) {
         }
     });
 
-    const rooms = formatRooms(result);
+    const lastFloor = await getLastFloor();
+
+    const rooms = formatRooms(result, lastFloor);
 
     return rooms;
+}
+
+async function getLastFloor(): Promise<number> {
+    const result = await RoomClient.aggregate({
+        _max: {
+            floor: true
+        }
+    })
+
+    return result._max.floor || 1;
 }
 
 const roomService = {

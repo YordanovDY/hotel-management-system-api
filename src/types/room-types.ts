@@ -12,6 +12,6 @@ export interface DBLiteRoom {
 export interface LiteRoom {
     id: string,
     roomNumber: string,
-    type: RoomType,
+    type: string,
     floor: number
 }
