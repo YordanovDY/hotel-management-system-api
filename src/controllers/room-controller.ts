@@ -78,7 +78,7 @@ export async function deleteRoomController(req: Request<RoomParams>, res: Respon
     const { id } = req.params;
     const user = req.user;
 
-    if(!user){
+    if (!user) {
         return;
     }
 
@@ -91,6 +91,42 @@ export async function deleteRoomController(req: Request<RoomParams>, res: Respon
         if (err instanceof Error) {
             const message = err.message;
 
+            if (message.startsWith('Not Found')) {
+                res.errors.notFound(message);
+                return;
+            }
+        }
+
+        console.log(err);
+        res.errors.internalServerError();
+    }
+}
+
+export async function updateRoomController(req: Request<RoomParams, {}, RoomBody>, res: Response) {
+    const { id } = req.params;
+    const data = req.body;
+    const user = req.user;
+
+    if (!user) {
+        return;
+    }
+
+    try {
+        const result = await roomService.updateRoom(id, data);
+        await eventService.updateRoom(user, result.roomNumber);
+        res.json(result);
+
+    } catch (err) {
+        if (err instanceof Error) {
+            const message = err.message;
+            if (message.startsWith('Validation Error')) {
+                res.errors.badRequest(message);
+                return;
+            }
+        }
+
+        if (err instanceof Error) {
+            const message = err.message;
             if (message.startsWith('Not Found')) {
                 res.errors.notFound(message);
                 return;
