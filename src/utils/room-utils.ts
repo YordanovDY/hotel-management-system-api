@@ -36,5 +36,5 @@ export function formatRooms(result: DBLiteRoom[], lastFloor: number): LiteRoom[]
         formattedRooms[currentFloor - 1].push(room);
     }
 
-    return formattedRooms;
+    return formattedRooms.reverse();
 }
